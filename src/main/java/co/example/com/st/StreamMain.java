@@ -11,7 +11,7 @@ public class StreamMain {
 
     public static void main(String[] args) {
 
-        StreamMain sm = new StreamMain();
+/*        StreamMain sm = new StreamMain();
         Integer max = sm.getMax(sm.numbers);
         Integer secondMaxValue = sm.getSecondMax(sm.numbers);
 
@@ -24,7 +24,9 @@ public class StreamMain {
         List<Person> result = Arrays.asList(sara, eva, viktor);
         System.out.println(getOldestPerson(result).getName());
 
-        System.out.println(Collections.max(result, Comparator.comparing(Person::getAge)).getName());
+        System.out.println(Collections.max(result, Comparator.comparing(Person::getAge)).getName());*/
+
+        getNMaximumCount();
     }
 
 
@@ -72,6 +74,19 @@ public class StreamMain {
         return people.isEmpty()
                 ? new Person("", 0)
                 : Collections.max(people, Comparator.comparing(Person::getAge));
+    }
+
+
+    public static void getNMaximumCount(){
+        List<String> fruites = Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple");
+
+        Map<String ,Long> freq= fruites.stream().
+                collect(Collectors.groupingBy(val->val,Collectors.counting()));
+        freq.forEach((name,count)-> System.out.println("Name: "+name
+        +" count: "+count));
+
+
+
     }
 
 

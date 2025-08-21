@@ -13,10 +13,8 @@ public class ExecutableClass {
         ExecutableClass obj = new ExecutableClass();
 
         List<Employee> employeeList= obj.prepareForExecution();
-
         //setOneQuestion(obj, employeeList);
-    //    setTwoQuestion(obj, employeeList);
-        obj.getSecondHighestPaidEmployee(employeeList);
+        setTwoQuestion(obj, employeeList);
         //failFast_FailSafe();
 
 
@@ -24,8 +22,8 @@ public class ExecutableClass {
 
     private static void setTwoQuestion(ExecutableClass obj, List<Employee> employeeList) {
 
-       // obj.countNoEmpEachDepartment(employeeList);
-        //obj.averageSalaryOfEachDepartment(employeeList);
+        obj.countNoEmpEachDepartment(employeeList);
+        obj.averageSalaryOfEachDepartment(employeeList);
         obj.getYoungestMaleEmployeeInProductDevelopment(employeeList);
     }
 
@@ -37,7 +35,7 @@ public class ExecutableClass {
 
         System.out.println( "other way "+
         employeeList.stream().filter(val->"Male".equals(val.getGender()) && ("Product Development").equals(val.getDepartment()))
-                .min(Comparator.comparingInt(Employee::getAge)));
+                .min(Comparator.comparingInt(Employee::getAge)).orElse(null));
 
 
     }
@@ -91,6 +89,9 @@ public class ExecutableClass {
         double second=sorted.size() >1 ? sorted.get(1).getSalary():null;
         System.out.println("Second highest salary: "+ second);
 
+        List<Employee> sortedEmp  =employeeList.stream().sorted(Comparator.comparing(Employee::getSalary).reversed()).collect(Collectors.toList());
+        double secondEmp=sortedEmp.size() >1 ? sortedEmp.get(1).getSalary():null;
+        System.out.println("Second highest salary: "+ secondEmp);
 
     }
 
@@ -99,7 +100,7 @@ public class ExecutableClass {
         System.out.println("getNameWhoJoinedAfter2015:"+employeeList.stream()
                 .filter(emp->emp.yearOfJoining>2015)
                 .map(Employee::getName)
-                .findFirst());
+                .findFirst().orElse(""));
         employeeList.stream()
                 .filter(emp->emp.yearOfJoining>2015)
                 .map(Employee::getName)
@@ -168,6 +169,11 @@ public class ExecutableClass {
 
         list.stream().map(emp->emp.department)
                 .distinct().forEach(System.out::println);
+
+        List<String> departments= list.stream().map(emp->emp.getDepartment())
+                .distinct().collect(Collectors.toList());
+
+        System.out.println("Departments :"+departments);
 
     }
 
